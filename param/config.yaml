@@ -1,0 +1,49 @@
+joints: ['pan_joint', 'tilt_joint']
+
+#Edit tilt_controller settings
+tilt_joint:
+    controller:
+        package: dynamixel_controllers
+        module: joint_position_controller
+        type: JointPositionController
+    joint_name: tilt_joint
+    joint_speed: 1 #60% more than pan_joint to fit speed
+    motor:
+        id: 1
+        init: 450
+        min: 410 #443
+        max: 484
+
+
+#Edit pan_controller settings
+pan_joint:
+    controller:
+        package: dynamixel_controllers
+        module: joint_position_controller
+        type: JointPositionController
+    joint_name: pan_joint
+    joint_speed: 1
+    motor:
+        id: 2
+        init: 512 #256
+        min: 412 #0 #470
+        max: 612 #550
+
+#Edit general configuration here
+default_joint_speed : 1
+max_joint_speed : 1
+lead_target_angle : 0.6
+
+pan_threshold : 0.18
+tilt_threshold : 0.18
+
+gain_pan : 0.8
+gain_tilt : 0.8
+
+rate : 10
+
+image_height : 240
+image_width : 320
+
+pan_name : 'pan_joint'
+tilt_name : 'tilt_joint'

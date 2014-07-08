@@ -1,0 +1,51 @@
+<launch>
+    <!--Start Dynamixel controller manager (find and init motors) -->
+    <node name="dynamixel_manager" pkg="dynamixel_controllers" type="controller_manager.py" required="true" output="screen">
+        <rosparam>
+            namespace: dxl_manager
+            serial_ports:
+                pan_tilt_port:
+                    port_name: "/dev/ttyUSB0"
+                    baud_rate: 1000000
+                    min_motor_id: 1
+                    max_motor_id: 2
+                    update_rate: 20
+        </rosparam>
+    </node>
+
+
+    <!--Give access to config file -->
+    <rosparam file="$(find hiwr_motors)/param/config.yaml" command="load"/>
+
+    <!-- Start tilt and joint controller -->
+    <node name="tilt_controller_spawner" pkg="dynamixel_controllers" type="controller_spawner.py"
+          args="--manager=dxl_manager
+                --port pan_tilt_port
+                tilt_joint
+                pan_joint"
+          output="screen"/>
+
+    <!-- Start the Dynamixel Joint States Publisher -->
+    <!--<node name="dynamixel_joint_states_publisher" pkg="hiwr_motors" type="dynamixel_joint_state_publisher.py" output="screen" />-->
+
+    <!-- Start Hiwr_Motor node-->
+    <!--<node pkg="hiwr_motors" name="hiwr_motors" type="hiwr_motors.py" output="screen">
+        <rosparam>
+           gain_pan: 1
+           gain_tilt: 1
+           default_joint_speed: 0.8
+           max_joint_speed: 0.8
+           pan_name : pan_joint
+           tilt_name : tilt_joint
+        </rosparam> -->
+    <node pkg="hiwr_motors" name="hiwr_motors" type="hiwr_motors" output="screen">
+        <!-- <param name="image_width" type="int" value=1280 /> --> <!--Retrieve from camera_info?? or yaml file of uvcCamNode? or define properMessage? -->
+    </node>
+
+
+   <!--<node name="hiwr_randommove" pkg="hiwr_motors" type="hiwr_randommove.py" output="screen" />-->
+
+
+</launch>
+
+
