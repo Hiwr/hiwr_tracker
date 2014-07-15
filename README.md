@@ -47,7 +47,7 @@ Node
 ----------------------
 
 ### Subscribed Topics
-- `/uvc_cam_node/roi`
+- `/hiwr_opencv_detector/roi`
  * The region of interest around the tracked object
 
 - `/pan_joint/state`
